@@ -1,5 +1,6 @@
 {
   "name": "mu-prediction-contest",
+  "description": "A web app that scrapes the contents of muscoop.com to calculate prediction contest winners",
   "workspaces": [
     "app",
     "server"

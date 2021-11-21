@@ -9,7 +9,7 @@ export const newPostText = `1. Total Game Points:
 9. MU top rebounder and how many:
 10. MU top 3-point shooter and how many:
 
-Bonus Question (1 point). TODO:
+Bonus Question (1 point). Predict something:
 
 Rules:
 [list]
