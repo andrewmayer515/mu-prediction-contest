@@ -38,7 +38,6 @@ function AppBar() {
   };
 
   const handleAddTotals = async () => {
-    console.log(result);
     const { data } = await axios.post('http://localhost:3000/api/totals', result);
     setResult(data);
   };
