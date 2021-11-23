@@ -36,6 +36,7 @@ module.exports = env => {
       new HtmlWebPackPlugin({
         template: './src/public/index.html',
         filename: './index.html',
+        favicon: './src/public/favicon.ico',
       }),
     ],
     devServer: {
