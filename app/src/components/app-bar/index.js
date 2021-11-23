@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import axios from 'axios';
 
 import AppBarComponent from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -11,8 +12,8 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import Divider from '@mui/material/Divider';
+import DescriptionIcon from '@mui/icons-material/Description';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 import { ResultContext } from '../../contexts';
 import { newPostText } from './helpers';
@@ -20,7 +21,7 @@ import { newPostText } from './helpers';
 //---------------------------------------------------------------------
 
 function AppBar() {
-  const { setResult } = useContext(ResultContext);
+  const { result, setResult } = useContext(ResultContext);
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -36,6 +37,12 @@ function AppBar() {
     setResult(newPostText);
   };
 
+  const handleAddTotals = async () => {
+    console.log(result);
+    const { data } = await axios.post('http://localhost:3000/api/totals', result);
+    setResult(data);
+  };
+
   const list = () => (
     <Box
       sx={{ width: 250 }}
@@ -46,12 +53,17 @@ function AppBar() {
       <List>
         <ListItem button key="New post" onClick={handleNewPost}>
           <ListItemIcon>
-            <InboxIcon />
+            <DescriptionIcon />
           </ListItemIcon>
           <ListItemText primary="New post" />
         </ListItem>
+        <ListItem button key="Add totals" onClick={handleAddTotals}>
+          <ListItemIcon>
+            <AddBoxIcon />
+          </ListItemIcon>
+          <ListItemText primary="Add totals" />
+        </ListItem>
       </List>
-      <Divider />
     </Box>
   );
 

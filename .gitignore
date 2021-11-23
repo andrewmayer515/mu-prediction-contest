@@ -6,3 +6,4 @@ scripts/post/config.json
 lib/
 coverage/
 results.txt
+totals.txt
