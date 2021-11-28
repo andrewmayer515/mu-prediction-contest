@@ -66,7 +66,7 @@ const Bonus = () => {
         ...input,
         bonus: {
           type: questionType,
-          point: parseInt(points, 10),
+          points: parseInt(points, 10),
           text: `${question}:`,
           answer: bonusResult,
         },
