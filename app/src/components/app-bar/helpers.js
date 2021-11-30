@@ -17,7 +17,7 @@ Rules:
 [li]All answers must be written next to the question being asked (to the right of the colon)[/li]
 [li]If a question asks for a player name, use first and/or last name [list]
 [li]ie: Kam, Jones, Kam Jones, or KJones[/li]
-[li][b]NEW[/b]: You can use [b]OMP [/b]or [b]OMax [/b]as a shorthand for Olivier-Maxence Prosper[/li]
+[li]You can use OMP or OMax as a shorthand for Olivier-Maxence Prosper[/li]
 [/list][/li]
 [li]Do not 'Quote' another users prediction[/li]
 [/list]
