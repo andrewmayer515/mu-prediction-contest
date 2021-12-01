@@ -66,7 +66,7 @@ const App = () => {
               <Bonus />
               <Submit />
             </Grid>
-            <Grid item xs={12} lg={5} sx={{ pr: 1 }}>
+            <Grid item xs={12} lg={5} sx={{ pr: 1, mt: 2 }}>
               <TextField
                 multiline
                 fullWidth

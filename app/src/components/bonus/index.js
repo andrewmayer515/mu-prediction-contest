@@ -83,7 +83,7 @@ const Bonus = () => {
       />
       {checked && (
         <>
-          <Box sx={{ display: 'flex' }}>
+          <Box sx={{ display: 'flex', mb: 1 }}>
             <TextField
               autoComplete="off"
               sx={{ minWidth: 100 }}

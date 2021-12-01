@@ -14,6 +14,7 @@ const Submit = () => {
 
   const handleClick = async () => {
     setLoading(true);
+    setResult('Loading...');
     try {
       const { data } = await axios.post('http://localhost:3000/api/results', sortObject(input));
       setResult(data);
