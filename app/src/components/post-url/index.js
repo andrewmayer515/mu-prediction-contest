@@ -20,7 +20,7 @@ const PostURL = () => {
     <Box
       component="form"
       sx={{
-        '& > :not(style)': { m: 1, mt: 2, minWidth: 500 },
+        '& > :not(style)': { m: 1, mt: 3, minWidth: 500 },
       }}
       noValidate
       autoComplete="off"
