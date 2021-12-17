@@ -16,11 +16,13 @@ const theme = createTheme({
 
 function Root() {
   return (
-    <ThemeProvider theme={theme}>
-      <App />
-    </ThemeProvider>
+    <React.StrictMode>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </React.StrictMode>
   );
 }
 
 // eslint-disable-next-line no-undef
-render(<Root />, document.getElementById('container'));
+render(<Root />, document.getElementById('root'));
