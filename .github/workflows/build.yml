@@ -22,6 +22,7 @@ jobs:
         working-directory: ./server
         run: npm run test-coverage
       - name: Coveralls
+        working-directory: ./server
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
