@@ -12,10 +12,10 @@ jobs:
           node-version: "14"
       - name: Install app dependencies
         working-directory: ./app
-        run: npm ci
+        run: npm ci -f
       - name: Install server dependencies
         working-directory: ./server
-        run: npm ci
+        run: npm ci -f
       - name: Run app lint
         working-directory: ./app
         run: npm run lint
