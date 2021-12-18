@@ -14,19 +14,25 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import DescriptionIcon from '@mui/icons-material/Description';
 import AddBoxIcon from '@mui/icons-material/AddBox';
+import Divider from '@mui/material/Divider';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 
-import { ResultContext } from '../../contexts';
-import { newPostText } from './helpers';
+import { ResultContext, LoadingContext } from '../../contexts';
+import { newPostText, demoData } from './helpers';
 
 //---------------------------------------------------------------------
 
 function AppBar() {
   const { result, setResult } = useContext(ResultContext);
+  const { setLoading } = useContext(LoadingContext);
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const toggleDrawer = open => event => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+    if (
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
       return;
     }
 
@@ -38,8 +44,26 @@ function AppBar() {
   };
 
   const handleAddTotals = async () => {
-    const { data } = await axios.post('http://localhost:3000/api/totals', result);
+    const { data } = await axios.post(
+      'http://localhost:3000/api/totals',
+      result
+    );
     setResult(data);
+  };
+
+  const handleDemo = async () => {
+    setLoading(true);
+    try {
+      const { data } = await axios.post(
+        'http://localhost:3000/api/results',
+        demoData
+      );
+      setResult(data);
+    } catch (e) {
+      console.log(e); // eslint-disable-line
+    }
+
+    setLoading(false);
   };
 
   const list = () => (
@@ -50,17 +74,24 @@ function AppBar() {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        <ListItem button key="New post" onClick={handleNewPost}>
+        <ListItem button key="new" onClick={handleNewPost}>
           <ListItemIcon>
             <DescriptionIcon />
           </ListItemIcon>
           <ListItemText primary="New post" />
         </ListItem>
-        <ListItem button key="Add totals" onClick={handleAddTotals}>
+        <ListItem button key="add" onClick={handleAddTotals}>
           <ListItemIcon>
             <AddBoxIcon />
           </ListItemIcon>
           <ListItemText primary="Add totals" />
+        </ListItem>
+        <Divider />
+        <ListItem button key="demo" onClick={handleDemo}>
+          <ListItemIcon>
+            <EmojiEventsIcon />
+          </ListItemIcon>
+          <ListItemText primary="Demo" />
         </ListItem>
       </List>
     </Box>
@@ -82,7 +113,11 @@ function AppBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Drawer anchor="right" open={isDrawerOpen} onClose={toggleDrawer(false)}>
+          <Drawer
+            anchor="right"
+            open={isDrawerOpen}
+            onClose={toggleDrawer(false)}
+          >
             {list()}
           </Drawer>
         </Toolbar>

@@ -2,7 +2,7 @@
 ![example workflow](https://github.com/andrewmayer515/mu-prediction-contest/actions/workflows/build.yml/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/andrewmayer515/mu-prediction-contest/badge.svg)](https://coveralls.io/github/andrewmayer515/mu-prediction-contest)
 
-![Screenshot](app/src/public/screenshot.jpg)
+![Screenshot](https://i.ibb.co/YkRsNfG/Screenshot.jpg)
 
 A web app that scrapes the content of [muscoop.com](https://www.muscoop.com/) using [Puppeteer](https://github.com/GoogleChrome/puppeteer#readme) to calculate prediction contest winners.
 
@@ -30,11 +30,8 @@ Run the following command to build the UI and start the server (opens on http://
 $ npm start
 ```
 
-## Quick Run
-After following the setup steps if you want to see how the program works, run the following to get the results from [the 2013 NCAA Tournament game against Davidson](https://www.muscoop.com/index.php?topic=37247.0):
-```
-$ npm start
-```
+## Demo
+With the app launched, opening the menu and clicking on **Demo** calculates and displays the results from  [the 2013 NCAA Tournament game against Davidson](https://www.muscoop.com/index.php?topic=37247.0).
 
 ## Maintenance
 Since some of the questions may refer to an individual player on the roster, the roster found in [server/config/roster.js](https://github.com/andrewmayer515/mu-prediction-contest/blob/master/server/config/roster.js) will need to be updated with the player names in a given year.
