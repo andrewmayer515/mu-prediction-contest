@@ -17,7 +17,7 @@ Additionally,
 * Do not 'Quote' another users prediction
 
 ## Setup
-Download the latet LTS version of [Node](https://nodejs.org/en/), then run the following:
+Download the latest LTS version of [Node](https://nodejs.org/en/), then run the following:
 ```
 $ git clone https://github.com/andrewmayer515/mu-prediction-contest.git
 $ cd mu-prediction-contest
