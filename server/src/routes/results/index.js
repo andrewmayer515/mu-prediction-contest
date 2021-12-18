@@ -20,9 +20,16 @@ const router = express.Router();
  * @param {*} props Properties of question, taken from the key.js file
  * @param {*} isBonusQuestion  Boolean for if the question being evaluated is the bonus question
  */
-export const determineQuestionWinner = (data, question, props, isBonusQuestion) => {
+export const determineQuestionWinner = (
+  data,
+  question,
+  props,
+  isBonusQuestion
+) => {
   // Get the line for the question currently being evaluated (IE 1., 2., Bonus, etc...)
-  const questionLine = isBonusQuestion ? 'Bonus' : `${question.replace(/[^0-9]/g, '')}.`;
+  const questionLine = isBonusQuestion
+    ? 'Bonus'
+    : `${question.replace(/[^0-9]/g, '')}.`;
 
   let winnerData;
   data.forEach(entry => {
@@ -66,9 +73,13 @@ export const questionRunner = (data, key) => {
   // Loop through each question in the config
   Object.keys(key).forEach(question => {
     if (question.indexOf(QUESTION) !== -1) {
-      results.push(determineQuestionWinner(data, question, key[question], false));
+      results.push(
+        determineQuestionWinner(data, question, key[question], false)
+      );
     } else if (question.indexOf(BONUS) !== -1) {
-      results.push(determineQuestionWinner(data, question, key[question], true));
+      results.push(
+        determineQuestionWinner(data, question, key[question], true)
+      );
     }
   });
 

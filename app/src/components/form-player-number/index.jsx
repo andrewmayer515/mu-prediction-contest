@@ -8,7 +8,12 @@ import { InputContext } from '../../contexts';
 
 //---------------------------------------------------------------------
 
-const FormPlayerNumber = ({ primaryLabel, secondaryLabel, order, overrideDefault }) => {
+const FormPlayerNumber = ({
+  primaryLabel,
+  secondaryLabel,
+  order,
+  overrideDefault,
+}) => {
   const { input, setInput } = useContext(InputContext);
 
   const [player, setPlayer] = useState();

@@ -26,7 +26,11 @@ const FormPlayer = ({ label, order, overrideDefault }) => {
     } else {
       setInput({
         ...input,
-        [`question${order}`]: { text: `${label}:`, answer: player, type: 'player' },
+        [`question${order}`]: {
+          text: `${label}:`,
+          answer: player,
+          type: 'player',
+        },
       });
     }
   };

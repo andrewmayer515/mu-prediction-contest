@@ -14,7 +14,12 @@ export const reasonablePlayerGuesses = players => {
   players.forEach(player => {
     const playerData = player.toLowerCase().split(' ');
     const initialLastName = `${playerData[0].charAt(0)}${playerData[1]}`;
-    results.push(`${playerData[0]}${playerData[1]}`, playerData[0], playerData[1], initialLastName);
+    results.push(
+      `${playerData[0]}${playerData[1]}`,
+      playerData[0],
+      playerData[1],
+      initialLastName
+    );
 
     // Allow a defined alias/nickname for a player set in constants
     if (_has(ALIAS, player)) {
@@ -31,7 +36,9 @@ export const reasonablePlayerGuesses = players => {
  * @param {*} predictionPlayer The player name that the user guessed
  */
 export const isMatchFound = (playerFormats, predictionPlayer) =>
-  playerFormats.some(playerName => levenshtein.get(playerName, predictionPlayer) <= 2);
+  playerFormats.some(
+    playerName => levenshtein.get(playerName, predictionPlayer) <= 2
+  );
 
 /**
  * Determines who guessed the correct player

@@ -44,9 +44,13 @@ const Bonus = () => {
   const renderQuestionType = () => {
     switch (questionType) {
       case 'player':
-        return <FormPlayer label="Enter Player" overrideDefault={setBonusResult} />;
+        return (
+          <FormPlayer label="Enter Player" overrideDefault={setBonusResult} />
+        );
       case 'number':
-        return <FormNumber label="Enter Number" overrideDefault={setBonusResult} />;
+        return (
+          <FormNumber label="Enter Number" overrideDefault={setBonusResult} />
+        );
       case 'playerNumber':
         return (
           <FormPlayerNumber

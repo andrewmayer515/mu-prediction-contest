@@ -21,7 +21,8 @@ export async function hasAllPageOption(page) {
   try {
     // Will fail if it can't find the All button on page
     const text = await page.evaluate(
-      () => document.querySelector('.floatleft > a:nth-last-child(1)').textContent
+      () =>
+        document.querySelector('.floatleft > a:nth-last-child(1)').textContent
     ); // eslint-disable-line no-undef
     if (text !== 'All') {
       throw new Error();
@@ -41,12 +42,18 @@ export async function getTotalPages(page, allPageOption) {
     if (allPageOption) {
       // More then 1 page, has All option
       totalPages = await page.evaluate(() =>
-        parseInt(document.querySelector('a.navPages:nth-last-child(2)').textContent, 10)
+        parseInt(
+          document.querySelector('a.navPages:nth-last-child(2)').textContent,
+          10
+        )
       ); // eslint-disable-line no-undef
     } else {
       // More then 1 page, no All option
       totalPages = await page.evaluate(() =>
-        parseInt(document.querySelector('a.navPages:nth-last-child(1)').textContent, 10)
+        parseInt(
+          document.querySelector('a.navPages:nth-last-child(1)').textContent,
+          10
+        )
       ); // eslint-disable-line no-undef
     }
   } catch (e) {
@@ -73,13 +80,17 @@ export async function getPredictionData(page, totalPages, key) {
     usernameArray = [
       ...usernameArray,
       ...(await page.evaluate(() =>
-        [...document.querySelectorAll('.poster > h4')].map(elem => elem.innerText)
+        [...document.querySelectorAll('.poster > h4')].map(
+          elem => elem.innerText
+        )
       )),
     ]; // eslint-disable-line no-undef
     commentArray = [
       ...commentArray,
       ...(await page.evaluate(() =>
-        [...document.querySelectorAll('.post > .inner')].map(elem => elem.innerText)
+        [...document.querySelectorAll('.post > .inner')].map(
+          elem => elem.innerText
+        )
       )),
     ]; // eslint-disable-line no-undef
     pageIndex += 1;

@@ -8,7 +8,13 @@ import _cloneDeep from 'lodash.clonedeep';
  * @param {*} username Username for the person who made the guess
  * @param {*} isBonusQuestion Boolean for if the question being evaluated is the bonus question
  */
-const number = ({ prediction, answer, winnerData, username, isBonusQuestion = false }) => {
+const number = ({
+  prediction,
+  answer,
+  winnerData,
+  username,
+  isBonusQuestion = false,
+}) => {
   const formattedPrediction = parseInt(prediction, 10);
   // If the prediction is not a number or there is no winner data (first time through),
   // automatically return the results
@@ -40,12 +46,18 @@ const number = ({ prediction, answer, winnerData, username, isBonusQuestion = fa
   }
 
   // Determine closest guess or if there is a tie
-  if (Math.abs(answer - formattedPrediction) < Math.abs(answer - winnerData.prediction)) {
+  if (
+    Math.abs(answer - formattedPrediction) <
+    Math.abs(answer - winnerData.prediction)
+  ) {
     return {
       username: [username],
       prediction: formattedPrediction,
     };
-  } else if (Math.abs(answer - formattedPrediction) === Math.abs(answer - winnerData.prediction)) {
+  } else if (
+    Math.abs(answer - formattedPrediction) ===
+    Math.abs(answer - winnerData.prediction)
+  ) {
     const data = _cloneDeep(winnerData);
     data.username.push(username);
     return {

@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nodemon --exec babel-node src/index.js",
     "debug": "npm start -- debug",
-    "lint": "./node_modules/.bin/eslint --quiet src/**",
+    "lint": "eslint --quiet src/**",
     "test": "jest",
     "test-watch": "jest --watch",
     "test-coverage": "jest --coverage",

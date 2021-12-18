@@ -18,7 +18,11 @@ const FormNumber = ({ label, order, overrideDefault }) => {
     } else {
       setInput({
         ...input,
-        [`question${order}`]: { text: `${label}:`, answer: number, type: 'number' },
+        [`question${order}`]: {
+          text: `${label}:`,
+          answer: number,
+          type: 'number',
+        },
       });
     }
   };
@@ -32,7 +36,12 @@ const FormNumber = ({ label, order, overrideDefault }) => {
       noValidate
       autoComplete="off"
     >
-      <TextField id="outlined-basic" label={label} variant="outlined" onChange={handleChange} />
+      <TextField
+        id="outlined-basic"
+        label={label}
+        variant="outlined"
+        onChange={handleChange}
+      />
     </Box>
   );
 };

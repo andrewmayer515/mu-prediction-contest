@@ -77,7 +77,9 @@ describe('output', () => {
 
       expect(fs.appendFileSync.mock.calls[0][1]).toBe('Results:\n');
       expect(fs.appendFileSync.mock.calls[1][1]).toBe('----------\n');
-      expect(fs.appendFileSync.mock.calls[2][1]).toBe('1. Total Game Points: 167\n');
+      expect(fs.appendFileSync.mock.calls[2][1]).toBe(
+        '1. Total Game Points: 167\n'
+      );
       expect(fs.appendFileSync.mock.calls[3][1]).toBe('   Test (160)\n');
       expect(fs.appendFileSync.mock.calls[4][1]).toBe('\n');
       expect(fs.appendFileSync.mock.calls[5][1]).toBe('2. MU Points: 89\n');
@@ -96,7 +98,9 @@ describe('output', () => {
       expect(fs.appendFileSync.mock.calls[14][1]).toBe(
         "Bonus. Predict Marquette's shooting percentage: 56\n"
       );
-      expect(fs.appendFileSync.mock.calls[15][1]).toBe('   Bonus_Winner (56)\n');
+      expect(fs.appendFileSync.mock.calls[15][1]).toBe(
+        '   Bonus_Winner (56)\n'
+      );
       expect(fs.appendFileSync.mock.calls[16][1]).toBe('\n');
       expect(fs.appendFileSync.mock.calls[17][1]).toBe('\n');
       expect(fs.appendFileSync.mock.calls[18][1]).toBe('Game Totals:\n');
@@ -120,7 +124,9 @@ describe('output', () => {
       fs.appendFileSync = jest.fn();
       questionWinners(results, key);
 
-      expect(fs.appendFileSync.mock.calls[0][1]).toBe('1. Total Game Points: 167\n');
+      expect(fs.appendFileSync.mock.calls[0][1]).toBe(
+        '1. Total Game Points: 167\n'
+      );
       expect(fs.appendFileSync.mock.calls[1][1]).toBe('   Test (160)\n');
       expect(fs.appendFileSync.mock.calls[2][1]).toBe('\n');
       expect(fs.appendFileSync.mock.calls[3][1]).toBe('2. MU Points: 89\n');
@@ -139,7 +145,9 @@ describe('output', () => {
       expect(fs.appendFileSync.mock.calls[12][1]).toBe(
         "Bonus. Predict Marquette's shooting percentage: 56\n"
       );
-      expect(fs.appendFileSync.mock.calls[13][1]).toBe('   Bonus_Winner (56)\n');
+      expect(fs.appendFileSync.mock.calls[13][1]).toBe(
+        '   Bonus_Winner (56)\n'
+      );
       expect(fs.appendFileSync.mock.calls[14][1]).toBe('\n');
     });
     test('return console log of error summary if the key file was not set correctly', () => {

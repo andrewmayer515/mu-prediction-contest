@@ -10,10 +10,18 @@ import number from '../number';
  * @param {*} username Username for the person who made the guess
  * @param {*} isBonusQuestion Boolean for if the question being evaluated is the bonus question
  */
-const playerNumber = ({ prediction, answer, winnerData, username, isBonusQuestion = false }) => {
+const playerNumber = ({
+  prediction,
+  answer,
+  winnerData,
+  username,
+  isBonusQuestion = false,
+}) => {
   // Regex to break down prediction to just alphanumeric
   const formattedPrediction = prediction.replace(/[^a-z0-9]/gi, '');
-  const predictionPlayer = formattedPrediction.replace(/[^a-z]/gi, '').toLowerCase();
+  const predictionPlayer = formattedPrediction
+    .replace(/[^a-z]/gi, '')
+    .toLowerCase();
   const predictionNumber = formattedPrediction.replace(/[^0-9]/gi, '');
   const playerFormats = reasonablePlayerGuesses(answer.player);
 
@@ -24,7 +32,10 @@ const playerNumber = ({ prediction, answer, winnerData, username, isBonusQuestio
     const numberWinnerData = winnerData
       ? {
           username: winnerData.username,
-          prediction: parseInt(winnerData.prediction.replace(/[^0-9]/gi, ''), 10),
+          prediction: parseInt(
+            winnerData.prediction.replace(/[^0-9]/gi, ''),
+            10
+          ),
         }
       : undefined;
     // Use the number question type to determine who is closer to the correct number
