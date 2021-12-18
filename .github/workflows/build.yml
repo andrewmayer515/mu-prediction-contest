@@ -18,9 +18,10 @@ jobs:
       - name: Run server lint
         working-directory: ./server
         run: npm run lint
-      # - name: Run tests
-      #   run: npm run test-coverage
-      # - name: Coveralls
-      #   uses: coverallsapp/github-action@master
-      #   with:
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run server tests
+        working-directory: ./server
+        run: npm run test-coverage
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
