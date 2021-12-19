@@ -14,6 +14,14 @@ export const header = () => {
   output('----------');
 };
 
+export const formatBonusText = points => {
+  if (Number(points) > 1) {
+    return `Bonus. (${points} points)`;
+  }
+
+  return 'Bonus.';
+};
+
 export const questionWinners = (results, key) => {
   Object.keys(key).forEach((question, index) => {
     if (question.indexOf(QUESTION) !== -1 || question.indexOf(BONUS) !== -1) {
@@ -21,7 +29,10 @@ export const questionWinners = (results, key) => {
         key[question].type === TYPE.PLAYER_NUMBER
           ? `${key[question].answer.player} - ${key[question].answer.number}`
           : key[question].answer;
-      const prefix = question === 'bonus' ? 'Bonus.' : `${index + 1}.`;
+      const prefix =
+        question === 'bonus'
+          ? formatBonusText(key[question].points)
+          : `${index + 1}.`;
       const winner = results[index].username.join(', ');
       const prediction = results[index].prediction
         ? `(${results[index].prediction})`

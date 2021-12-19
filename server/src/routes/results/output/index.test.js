@@ -1,5 +1,11 @@
 import fs from 'fs';
-import { displayResults, header, questionWinners, summary } from './index';
+import {
+  displayResults,
+  header,
+  questionWinners,
+  summary,
+  formatBonusText,
+} from './index';
 import { TYPE } from '../../../constants';
 
 describe('output', () => {
@@ -70,6 +76,7 @@ describe('output', () => {
       points: 3,
     },
   };
+
   describe('displayResults', () => {
     test('should console log all of the output sections', () => {
       fs.appendFileSync = jest.fn();
@@ -96,7 +103,7 @@ describe('output', () => {
       expect(fs.appendFileSync.mock.calls[12][1]).toBe('   No winner \n');
       expect(fs.appendFileSync.mock.calls[13][1]).toBe('\n');
       expect(fs.appendFileSync.mock.calls[14][1]).toBe(
-        "Bonus. Predict Marquette's shooting percentage: 56\n"
+        "Bonus. (3 points) Predict Marquette's shooting percentage: 56\n"
       );
       expect(fs.appendFileSync.mock.calls[15][1]).toBe(
         '   Bonus_Winner (56)\n'
@@ -110,6 +117,7 @@ describe('output', () => {
       expect(fs.appendFileSync.mock.calls[22][1]).toBe('Test - 1\n');
     });
   });
+
   describe('header', () => {
     test('return console log headers for output', () => {
       fs.appendFileSync = jest.fn();
@@ -119,6 +127,23 @@ describe('output', () => {
       expect(fs.appendFileSync.mock.calls[1][1]).toBe('----------\n');
     });
   });
+
+  describe('formatBonusText', () => {
+    test('should return bonus text when bonus points are 1', () => {
+      const points = 1;
+      const expected = 'Bonus.';
+
+      expect(formatBonusText(points)).toEqual(expected);
+    });
+
+    test('should return bonus text when bonus points are greater than 1', () => {
+      const points = 2;
+      const expected = 'Bonus. (2 points)';
+
+      expect(formatBonusText(points)).toEqual(expected);
+    });
+  });
+
   describe('questionWinners', () => {
     test('return console log of question winners and answers', () => {
       fs.appendFileSync = jest.fn();
@@ -143,13 +168,14 @@ describe('output', () => {
       expect(fs.appendFileSync.mock.calls[10][1]).toBe('   No winner \n');
       expect(fs.appendFileSync.mock.calls[11][1]).toBe('\n');
       expect(fs.appendFileSync.mock.calls[12][1]).toBe(
-        "Bonus. Predict Marquette's shooting percentage: 56\n"
+        "Bonus. (3 points) Predict Marquette's shooting percentage: 56\n"
       );
       expect(fs.appendFileSync.mock.calls[13][1]).toBe(
         '   Bonus_Winner (56)\n'
       );
       expect(fs.appendFileSync.mock.calls[14][1]).toBe('\n');
     });
+
     test('return console log of error summary if the key file was not set correctly', () => {
       const badKey = {
         wrongFormat: {
@@ -168,6 +194,7 @@ describe('output', () => {
         'Verify key.js file has been set correctly\n'
       );
     });
+
     test('return no console log if the line being read is the url', () => {
       const badKey = {
         url: 'https://www.muscoop.com/index.php?topic=35990.0;all',
@@ -178,6 +205,7 @@ describe('output', () => {
       expect(fs.appendFileSync).not.toHaveBeenCalled();
     });
   });
+
   describe('summary', () => {
     test('return console log of summarized game total points for each username', () => {
       fs.appendFileSync = jest.fn();
@@ -189,6 +217,7 @@ describe('output', () => {
       expect(fs.appendFileSync.mock.calls[4][1]).toBe('Andrew - 2\n');
       expect(fs.appendFileSync.mock.calls[5][1]).toBe('Test - 1\n');
     });
+
     test('return console log of summarized game total points for each username (no bonus winner)', () => {
       const results2 = [
         {
