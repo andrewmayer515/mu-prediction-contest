@@ -1,8 +1,7 @@
 {
-  "extends": ["airbnb-base", "prettier", "plugin:react/recommended", "plugin:react-hooks/recommended"],
+  "extends": ["airbnb-base", "plugin:react/recommended", "plugin:react-hooks/recommended", "plugin:prettier/recommended"],
   "rules": {
-    "no-else-return": ["error", { "allowElseIf": true }],
-    "prettier/prettier": ["error"]
+    "no-else-return": ["error", { "allowElseIf": true }]
   },
   "plugins": ["json", "prettier"],
   "env": {

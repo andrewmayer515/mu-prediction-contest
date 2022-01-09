@@ -87,7 +87,7 @@ const App = () => {
                 <TextField
                   multiline
                   fullWidth
-                  minRows={30}
+                  rows={30}
                   placeholder="Results appear here"
                   value={result}
                   onChange={handleOnChange}
