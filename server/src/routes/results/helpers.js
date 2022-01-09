@@ -70,6 +70,11 @@ export async function getPredictionData(page, totalPages, key) {
   let commentArray = [];
   const updatedURL = key.url.slice(0, -1);
 
+  // Get OP username
+  const opUsername = await page.evaluate(
+    () => document.querySelector('.poster > h4').innerText
+  );
+
   while (pageIndex < totalPages) {
     if (pageIndex !== 0) {
       const index = pageIndex * 25;
@@ -96,13 +101,22 @@ export async function getPredictionData(page, totalPages, key) {
     pageIndex += 1;
   }
 
-  // Combine all posts to get prediction data
+  // Combine posts to get prediction data
   const predictionData = [];
   await usernameArray.forEach((value, index) => {
-    predictionData.push({
-      username: usernameArray[index],
-      comment: commentArray[index].split('\n'),
-    });
+    // If a user does not have a quote in their prediction
+    // OR they do, and the quote is from OP
+    // Want to ignore posts that quote other user predictions
+    if (
+      !commentArray[index].includes('Quote from') ||
+      (commentArray[index].includes('Quote from') &&
+        commentArray[index].includes(opUsername))
+    ) {
+      predictionData.push({
+        username: usernameArray[index],
+        comment: commentArray[index].split('\n'),
+      });
+    }
   });
 
   return predictionData;
