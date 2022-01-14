@@ -89,7 +89,7 @@ export async function getPredictionData(page, totalPages, key) {
           elem => elem.innerText
         )
       )),
-    ]; // eslint-disable-line no-undef
+    ];
     commentArray = [
       ...commentArray,
       ...(await page.evaluate(() =>
@@ -97,7 +97,7 @@ export async function getPredictionData(page, totalPages, key) {
           elem => elem.innerText
         )
       )),
-    ]; // eslint-disable-line no-undef
+    ];
     pageIndex += 1;
   }
 

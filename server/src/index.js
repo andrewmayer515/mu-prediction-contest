@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import resultsRouter from './routes/results';
 import rosterRouter from './routes/roster';
 import totalsRouter from './routes/totals';
+import boxscoreRouter from './routes/boxscore';
 
 //---------------------------------------------------------------------
 
@@ -19,7 +20,8 @@ app.use(cors());
 app
   .use('/api', resultsRouter)
   .use('/api', rosterRouter)
-  .use('/api', totalsRouter);
+  .use('/api', totalsRouter)
+  .use('/api', boxscoreRouter);
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console
