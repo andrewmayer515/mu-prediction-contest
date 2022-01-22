@@ -11,13 +11,16 @@ const output = text => {
 
 function getTotals(input) {
   const data = input.split('\n');
-  const formattedData = data
-    .filter(item => item)
-    .map(item => {
-      const replacement = item.replace(/\s/g, '').split('-');
-      replacement[1] = parseInt(replacement[1], 10);
-      return replacement;
-    });
+  // Remove blank spaces AND
+  // Replace last dash with uncommon character, some users have names with dashes in them
+  const formattedData = data.map(item => {
+    const replacement = item
+      .replace(/\s/g, '')
+      .replace(/-(?!.*-)/, '^')
+      .split('^');
+    replacement[1] = parseInt(replacement[1], 10);
+    return replacement;
+  });
 
   // Sum totals from duplicate usernames
   const counts = {};
