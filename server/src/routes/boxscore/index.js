@@ -33,7 +33,8 @@ const BOXSCORE_INDEX = {
  * @param {Number} stat
  * @returns object containing player name and recorded statistic value
  */
-const getIndexArrayOfTopStatistic = (table, stat) => {
+const getIndexArrayOfTopStatistic = (_table, stat) => {
+  const table = _clone(_table);
   table.splice(0, 1);
   table.splice(table.length - 1, 1);
 
