@@ -22,6 +22,7 @@ import TextField from '@mui/material/TextField';
 import TableRowsIcon from '@mui/icons-material/TableRows';
 
 import { ResultContext, LoadingContext } from '../../contexts';
+import useStore from '../../store';
 import { newPostText, demoData } from './helpers';
 
 //---------------------------------------------------------------------
@@ -47,6 +48,8 @@ function AppBar() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isModal, setModalOpen] = useState(false);
   const [url, setUrl] = useState('');
+
+  const importBoxscore = useStore(state => state.importBoxscore);
 
   const toggleDrawer = open => event => {
     if (
@@ -94,7 +97,8 @@ function AppBar() {
       const { data } = await axios('http://localhost:3000/api/boxscore', {
         params: { url },
       });
-      setResult(JSON.stringify(data));
+      importBoxscore(data);
+      setResult('');
     } catch (e) {
       console.log(e); // eslint-disable-line
     }
@@ -182,7 +186,6 @@ function AppBar() {
             variant="outlined"
             placeholder="gomarquette.com boxscore url"
             fullWidth
-            label=""
             onChange={handleOnChange}
           />
           <Box>

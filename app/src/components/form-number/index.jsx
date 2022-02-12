@@ -1,29 +1,26 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import shallow from 'zustand/shallow';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
-import { InputContext } from '../../contexts';
+import useStore from '../../store';
 
 //---------------------------------------------------------------------
 
 const FormNumber = ({ label, order, overrideDefault }) => {
-  const { input, setInput } = useContext(InputContext);
+  const [updateQuestion, questions] = useStore(
+    state => [state.updateQuestion, state.questions],
+    shallow
+  );
 
-  const handleChange = e => {
+  const handleOnChange = e => {
     const number = parseInt(e.target.value, 10);
 
     if (overrideDefault) {
       overrideDefault(number);
     } else {
-      setInput({
-        ...input,
-        [`question${order}`]: {
-          text: `${label}:`,
-          answer: number,
-          type: 'number',
-        },
-      });
+      updateQuestion({ order, answer: number });
     }
   };
 
@@ -40,7 +37,8 @@ const FormNumber = ({ label, order, overrideDefault }) => {
         id="outlined-basic"
         label={label}
         variant="outlined"
-        onChange={handleChange}
+        onChange={handleOnChange}
+        value={order ? questions[order - 1].answer : ''}
       />
     </Box>
   );
