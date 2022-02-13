@@ -38,15 +38,23 @@ const useStore = create(
       },
       {
         order: 7,
+        type: 'playerNumber',
+        answer: {},
       },
       {
         order: 8,
+        type: 'playerNumber',
+        answer: {},
       },
       {
         order: 9,
+        type: 'playerNumber',
+        answer: {},
       },
       {
         order: 10,
+        type: 'playerNumber',
+        answer: {},
       },
     ],
     updateQuestion: question =>
