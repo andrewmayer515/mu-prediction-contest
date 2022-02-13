@@ -1,11 +1,10 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import shallow from 'zustand/shallow';
 import Box from '@mui/material/Box';
 
 import FormPlayer from '../form-player';
 import FormNumber from '../form-number';
-import { InputContext } from '../../contexts';
 import useStore from '../../store';
 
 //---------------------------------------------------------------------
@@ -14,54 +13,45 @@ const FormPlayerNumber = ({
   primaryLabel,
   secondaryLabel,
   order,
-  overrideDefault,
+  // overrideDefault,
 }) => {
-  const { input, setInput } = useContext(InputContext);
-
-  const [player, setPlayer] = useState();
-  const [number, setNumber] = useState();
-
   const [updateQuestion, questions] = useStore(
     state => [state.updateQuestion, state.questions],
     shallow
   );
 
-  useEffect(() => {
-    // Don't fire on initial render
-    if (player && number) {
-      if (overrideDefault) {
-        overrideDefault({
-          player,
-          number,
-        });
-      } else {
-        // setInput({
-        //   ...input,
-        //   [`question${order}`]: {
-        //     text: `${primaryLabel} and how many:`,
-        //     answer: {
-        //       player,
-        //       number,
-        //     },
-        //     type: 'playerNumber',
-        //   },
-        // });
-        updateQuestion({ order, answer: { player, number } });
-      }
-    }
-  }, [player, number]);
+  const { player, number } = questions[order - 1].answer;
 
-  const handlePlayerChange = e => {
-    setPlayer(e);
+  // useEffect(() => {
+  //   // Don't fire on initial render
+  //   if (player !== undefined || number !== undefined) {
+  //     if (overrideDefault) {
+  //       overrideDefault({
+  //         player,
+  //         number,
+  //       });
+  //     } else {
+  //       updateQuestion({ order, answer: { player, number } });
+  //     }
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [player, number]);
+
+  const handlePlayerChange = updated => {
+    updateQuestion({ order, answer: { player: updated, number } });
   };
 
-  const handleNumberChange = e => {
-    setNumber(e);
+  const handleNumberChange = updated => {
+    updateQuestion({ order, answer: { player, number: updated } });
   };
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <FormPlayer label={primaryLabel} overrideDefault={handlePlayerChange} />
+      <FormPlayer
+        label={primaryLabel}
+        order={order}
+        overrideDefault={handlePlayerChange}
+      />
       <FormNumber
         label={secondaryLabel}
         order={order}

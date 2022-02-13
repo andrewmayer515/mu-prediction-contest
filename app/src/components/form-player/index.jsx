@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import shallow from 'zustand/shallow';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -8,6 +9,7 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
 import { RosterContext, InputContext } from '../../contexts';
+import useStore from '../../store';
 import { getPlayerOptions } from './helpers';
 
 //---------------------------------------------------------------------
@@ -19,8 +21,13 @@ const FormPlayer = ({ label, order, overrideDefault }) => {
   const roster = useContext(RosterContext);
   const { input, setInput } = useContext(InputContext);
 
+  const [questions] = useStore(state => [state.questions], shallow);
+  const value = questions[order - 1].answer.player.map(item => ({
+    value: item,
+  }));
+
   const handleChange = (e, values) => {
-    const player = values.map(value => value.value);
+    const player = values.map(_value => _value.value);
     if (overrideDefault) {
       overrideDefault(player);
     } else {
@@ -43,7 +50,10 @@ const FormPlayer = ({ label, order, overrideDefault }) => {
           autoSelect
           multiple
           getOptionLabel={option => option.value}
-          isOptionEqualToValue={(option, value) => option.value === value.value}
+          isOptionEqualToValue={(option, _value) =>
+            option.value === _value.value
+          }
+          value={value}
           onChange={handleChange}
           renderOption={(props, option, { selected }) => (
             <li {...props}>

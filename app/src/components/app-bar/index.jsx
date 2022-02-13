@@ -187,6 +187,7 @@ function AppBar() {
             placeholder="gomarquette.com boxscore url"
             fullWidth
             onChange={handleOnChange}
+            autoFocus
           />
           <Box>
             <Button

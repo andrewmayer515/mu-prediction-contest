@@ -39,22 +39,34 @@ const useStore = create(
       {
         order: 7,
         type: 'playerNumber',
-        answer: {},
+        answer: {
+          player: [],
+          number: '',
+        },
       },
       {
         order: 8,
         type: 'playerNumber',
-        answer: {},
+        answer: {
+          player: [],
+          number: '',
+        },
       },
       {
         order: 9,
         type: 'playerNumber',
-        answer: {},
+        answer: {
+          player: [],
+          number: '',
+        },
       },
       {
         order: 10,
         type: 'playerNumber',
-        answer: {},
+        answer: {
+          player: [],
+          number: '',
+        },
       },
     ],
     updateQuestion: question =>
@@ -71,21 +83,21 @@ const useStore = create(
           }),
         }),
         false,
-        'updateQuestion'
+        'UPDATE_QUESTION'
       ),
     importBoxscore: boxscore =>
-      set(state => ({
-        questions: state.questions.map(
-          (item, index) => {
+      set(
+        state => ({
+          questions: state.questions.map((item, index) => {
             return {
               ...item,
               answer: boxscore[index].result,
             };
-          },
-          false,
-          'importBoxscore'
-        ),
-      })),
+          }),
+        }),
+        false,
+        'IMPORT_BOXSCORE'
+      ),
   }))
 );
 

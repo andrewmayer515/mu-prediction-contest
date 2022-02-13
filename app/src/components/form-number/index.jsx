@@ -14,6 +14,11 @@ const FormNumber = ({ label, order, overrideDefault }) => {
     shallow
   );
 
+  const value =
+    typeof questions[order - 1].answer === 'object'
+      ? questions[order - 1].answer.number
+      : questions[order - 1].answer;
+
   const handleOnChange = e => {
     const number = parseInt(e.target.value, 10);
 
@@ -38,7 +43,7 @@ const FormNumber = ({ label, order, overrideDefault }) => {
         label={label}
         variant="outlined"
         onChange={handleOnChange}
-        value={order ? questions[order - 1].answer : ''}
+        value={value}
       />
     </Box>
   );
