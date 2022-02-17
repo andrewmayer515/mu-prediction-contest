@@ -1,14 +1,19 @@
 import React, { useContext } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
 import axios from 'axios';
+import shallow from 'zustand/shallow';
 
-import { InputContext, ResultContext, LoadingContext } from '../../contexts';
-import { sortObject } from './helpers';
+import { ResultContext, LoadingContext } from '../../contexts';
+import useStore from '../../store';
+import { formatBody } from './helpers';
 
 //---------------------------------------------------------------------
 
 const Submit = () => {
-  const { input } = useContext(InputContext);
+  const [questions, url] = useStore(
+    state => [state.questions, state.url],
+    shallow
+  );
   const { setResult } = useContext(ResultContext);
   const { loading, setLoading } = useContext(LoadingContext);
 
@@ -17,7 +22,7 @@ const Submit = () => {
     try {
       const { data } = await axios.post(
         'http://localhost:3000/api/results',
-        sortObject(input)
+        formatBody(questions, url)
       );
       setResult(data);
     } catch (e) {

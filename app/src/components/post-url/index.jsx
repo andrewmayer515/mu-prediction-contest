@@ -1,19 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
-import { InputContext } from '../../contexts';
+import useStore from '../../store';
 
 //---------------------------------------------------------------------
 
 const PostURL = () => {
-  const { input, setInput } = useContext(InputContext);
+  const [input, setInput] = useState();
+  const updateURL = useStore(state => state.updateURL);
+
+  const handleBlur = () => {
+    updateURL(input);
+  };
 
   const handleChange = e => {
-    setInput({
-      ...input,
-      url: e.target.value,
-    });
+    setInput(e.target.value);
   };
 
   return (
@@ -29,6 +31,7 @@ const PostURL = () => {
         id="outlined-basic"
         label="MU Scoop Post URL"
         variant="outlined"
+        onBlur={handleBlur}
         onChange={handleChange}
       />
     </Box>
