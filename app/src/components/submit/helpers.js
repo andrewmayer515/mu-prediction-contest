@@ -1,4 +1,4 @@
-export const formatBody = (questions, url) => {
+export const formatBody = (questions, bonus, url) => {
   const body = {};
   questions.forEach(question => {
     body[`question${question.order}`] = { ...question };
@@ -6,6 +6,7 @@ export const formatBody = (questions, url) => {
 
   return {
     ...body,
+    bonus,
     url,
   };
 };

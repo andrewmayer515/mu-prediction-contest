@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
@@ -12,18 +12,20 @@ import Box from '@mui/material/Box';
 import FormPlayer from '../form-player';
 import FormNumber from '../form-number';
 import FormPlayerNumber from '../form-player-number';
-import { InputContext } from '../../contexts';
+import useStore from '../../store';
 
 //---------------------------------------------------------------------
 
 const Bonus = () => {
-  const { input, setInput } = useContext(InputContext);
+  const updateBonus = useStore(state => state.updateBonus);
 
   const [checked, setChecked] = useState(false);
   const [question, setQuestion] = useState('');
   const [points, setPoints] = useState('');
   const [questionType, setQuestionType] = useState('');
-  const [bonusResult, setBonusResult] = useState();
+  const [bonusResult, setBonusResult] = useState('');
+
+  const firstUpdate = useRef(true);
 
   const handleSwitchChange = () => {
     setChecked(!checked);
@@ -45,11 +47,19 @@ const Bonus = () => {
     switch (questionType) {
       case 'player':
         return (
-          <FormPlayer label="Enter Player" overrideDefault={setBonusResult} />
+          <FormPlayer
+            label="Enter Player"
+            overrideDefault={setBonusResult}
+            bonusInputValue
+          />
         );
       case 'number':
         return (
-          <FormNumber label="Enter Number" overrideDefault={setBonusResult} />
+          <FormNumber
+            label="Enter Number"
+            overrideDefault={setBonusResult}
+            bonusInputValue
+          />
         );
       case 'playerNumber':
         return (
@@ -57,6 +67,7 @@ const Bonus = () => {
             primaryLabel="Enter Player"
             secondaryLabel="Enter Number"
             overrideDefault={setBonusResult}
+            bonusInputValue
           />
         );
       default:
@@ -65,18 +76,17 @@ const Bonus = () => {
   };
 
   useEffect(() => {
-    if (question && points && questionType) {
-      setInput({
-        ...input,
-        bonus: {
-          type: questionType,
-          points: parseInt(points, 10),
-          text: `${question}:`,
-          answer: bonusResult,
-        },
+    if (!firstUpdate.current) {
+      updateBonus({
+        type: questionType,
+        points: parseInt(points, 10),
+        text: `${question}:`,
+        answer: bonusResult,
       });
+    } else {
+      firstUpdate.current = false;
     }
-  }, [question, points, questionType, bonusResult]);
+  }, [question, points, questionType, bonusResult, updateBonus]);
 
   return (
     <FormGroup>

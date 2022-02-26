@@ -5,6 +5,7 @@ import { devtools } from 'zustand/middleware';
 
 const useStore = create(
   devtools(set => ({
+    url: '',
     questions: [
       {
         order: 1,
@@ -79,7 +80,9 @@ const useStore = create(
         },
       },
     ],
-    url: '',
+    bonus: {
+      answer: '',
+    },
     updateQuestion: question =>
       set(
         state => ({
@@ -95,6 +98,14 @@ const useStore = create(
         }),
         false,
         'UPDATE_QUESTION'
+      ),
+    updateBonus: bonus =>
+      set(
+        () => ({
+          bonus: { ...bonus },
+        }),
+        false,
+        'UPDATE_BONUS'
       ),
     importBoxscore: boxscore =>
       set(

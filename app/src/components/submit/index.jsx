@@ -10,8 +10,8 @@ import { formatBody } from './helpers';
 //---------------------------------------------------------------------
 
 const Submit = () => {
-  const [questions, url] = useStore(
-    state => [state.questions, state.url],
+  const [questions, url, bonus] = useStore(
+    state => [state.questions, state.url, state.bonus],
     shallow
   );
   const { setResult } = useContext(ResultContext);
@@ -22,7 +22,7 @@ const Submit = () => {
     try {
       const { data } = await axios.post(
         'http://localhost:3000/api/results',
-        formatBody(questions, url)
+        formatBody(questions, bonus, url)
       );
       setResult(data);
     } catch (e) {

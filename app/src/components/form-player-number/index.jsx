@@ -13,36 +13,32 @@ const FormPlayerNumber = ({
   primaryLabel,
   secondaryLabel,
   order,
-  // overrideDefault,
+  overrideDefault,
+  bonusInputValue,
 }) => {
-  const [updateQuestion, questions] = useStore(
-    state => [state.updateQuestion, state.questions],
+  const [updateQuestion, questions, bonus] = useStore(
+    state => [state.updateQuestion, state.questions, state.bonus],
     shallow
   );
 
-  const { player, number } = questions[order - 1].answer;
-
-  // useEffect(() => {
-  //   // Don't fire on initial render
-  //   if (player !== undefined || number !== undefined) {
-  //     if (overrideDefault) {
-  //       overrideDefault({
-  //         player,
-  //         number,
-  //       });
-  //     } else {
-  //       updateQuestion({ order, answer: { player, number } });
-  //     }
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [player, number]);
+  const { player, number } = bonusInputValue
+    ? bonus.answer
+    : questions[order - 1].answer;
 
   const handlePlayerChange = updated => {
-    updateQuestion({ order, answer: { player: updated, number } });
+    if (bonusInputValue) {
+      overrideDefault({ player: updated, number });
+    } else {
+      updateQuestion({ order, answer: { player: updated, number } });
+    }
   };
 
   const handleNumberChange = updated => {
-    updateQuestion({ order, answer: { player, number: updated } });
+    if (bonusInputValue) {
+      overrideDefault({ player, number: updated });
+    } else {
+      updateQuestion({ order, answer: { player, number: updated } });
+    }
   };
 
   return (
@@ -51,11 +47,13 @@ const FormPlayerNumber = ({
         label={primaryLabel}
         order={order}
         overrideDefault={handlePlayerChange}
+        bonusInputValue={bonusInputValue}
       />
       <FormNumber
         label={secondaryLabel}
         order={order}
         overrideDefault={handleNumberChange}
+        bonusInputValue={bonusInputValue}
       />
     </Box>
   );
@@ -66,6 +64,11 @@ FormPlayerNumber.propTypes = {
   secondaryLabel: PropTypes.string.isRequired,
   order: PropTypes.number,
   overrideDefault: PropTypes.func,
+  bonusInputValue: PropTypes.bool,
+};
+
+FormPlayerNumber.defaultProps = {
+  bonusInputValue: false,
 };
 
 export default FormPlayerNumber;

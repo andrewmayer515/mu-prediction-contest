@@ -8,16 +8,22 @@ import useStore from '../../store';
 
 //---------------------------------------------------------------------
 
-const FormNumber = ({ label, order, overrideDefault }) => {
-  const [updateQuestion, questions] = useStore(
-    state => [state.updateQuestion, state.questions],
+const FormNumber = ({ label, order, overrideDefault, bonusInputValue }) => {
+  const [updateQuestion, questions, bonus] = useStore(
+    state => [state.updateQuestion, state.questions, state.bonus],
     shallow
   );
 
-  const value =
-    typeof questions[order - 1].answer === 'object'
-      ? questions[order - 1].answer.number
-      : questions[order - 1].answer;
+  let value;
+  if (bonusInputValue) {
+    value =
+      typeof bonus.answer === 'object' ? bonus.answer.number : bonus.answer;
+  } else {
+    value =
+      typeof questions[order - 1].answer === 'object'
+        ? questions[order - 1].answer.number
+        : questions[order - 1].answer;
+  }
 
   const handleOnChange = e => {
     const number = parseInt(e.target.value, 10);
@@ -53,6 +59,11 @@ FormNumber.propTypes = {
   label: PropTypes.string.isRequired,
   order: PropTypes.number,
   overrideDefault: PropTypes.func,
+  bonusInputValue: PropTypes.bool,
+};
+
+FormNumber.defaultProps = {
+  bonusInputValue: false,
 };
 
 export default FormNumber;

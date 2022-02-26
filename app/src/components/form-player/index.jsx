@@ -8,7 +8,7 @@ import Checkbox from '@mui/material/Checkbox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
-import { RosterContext, InputContext } from '../../contexts';
+import { RosterContext } from '../../contexts';
 import useStore from '../../store';
 import { getPlayerOptions } from './helpers';
 
@@ -17,28 +17,34 @@ import { getPlayerOptions } from './helpers';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-const FormPlayer = ({ label, order, overrideDefault }) => {
+const FormPlayer = ({ label, order, overrideDefault, bonusInputValue }) => {
   const roster = useContext(RosterContext);
-  const { input, setInput } = useContext(InputContext);
 
-  const [questions] = useStore(state => [state.questions], shallow);
-  const value = questions[order - 1].answer.player.map(item => ({
-    value: item,
-  }));
+  const [updateQuestion, questions, bonus] = useStore(
+    state => [state.updateQuestion, state.questions, state.bonus],
+    shallow
+  );
+
+  let value;
+  if (bonusInputValue) {
+    value =
+      typeof bonus.answer.player === 'function'
+        ? bonus.answer.player.map(item => ({
+            value: item,
+          }))
+        : [];
+  } else {
+    value = questions[order - 1].answer.player.map(item => ({
+      value: item,
+    }));
+  }
 
   const handleChange = (e, values) => {
     const player = values.map(_value => _value.value);
     if (overrideDefault) {
       overrideDefault(player);
     } else {
-      setInput({
-        ...input,
-        [`question${order}`]: {
-          text: `${label}:`,
-          answer: player,
-          type: 'player',
-        },
-      });
+      updateQuestion({ order, answer: player });
     }
   };
 
@@ -78,6 +84,11 @@ FormPlayer.propTypes = {
   label: PropTypes.string.isRequired,
   order: PropTypes.number,
   overrideDefault: PropTypes.func,
+  bonusInputValue: PropTypes.bool,
+};
+
+FormPlayer.defaultProps = {
+  bonusInputValue: false,
 };
 
 export default FormPlayer;
