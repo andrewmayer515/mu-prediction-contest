@@ -58,7 +58,7 @@ const getIndexArrayOfTopStatistic = (_table, stat) => {
   const formattedPlayer = player.map(name => {
     const result = name.split(',');
 
-    return `${result[1]} ${result[0]}`;
+    return { value: `${result[1]} ${result[0]}` };
   });
   const [number] = targetIndex.map(index =>
     Number(table[index][stat].split('-')[0])

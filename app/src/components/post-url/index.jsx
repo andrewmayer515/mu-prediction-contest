@@ -1,22 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-
-import useStore from '../../store';
 
 //---------------------------------------------------------------------
 
 const PostURL = () => {
-  const [input, setInput] = useState();
-  const updateURL = useStore(state => state.updateURL);
-
-  const handleBlur = () => {
-    updateURL(input);
-  };
-
-  const handleChange = e => {
-    setInput(e.target.value);
-  };
+  const { control } = useFormContext();
 
   return (
     <Box
@@ -27,12 +17,19 @@ const PostURL = () => {
       noValidate
       autoComplete="off"
     >
-      <TextField
-        id="outlined-basic"
-        label="MU Scoop Post URL"
-        variant="outlined"
-        onBlur={handleBlur}
-        onChange={handleChange}
+      <Controller
+        name="url"
+        control={control}
+        defaultValue=""
+        render={({ field: { onChange, value } }) => (
+          <TextField
+            id="outlined-basic"
+            label="MU Scoop Post URL"
+            variant="outlined"
+            onChange={onChange}
+            value={value}
+          />
+        )}
       />
     </Box>
   );

@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
@@ -12,31 +13,17 @@ import Box from '@mui/material/Box';
 import FormPlayer from '../form-player';
 import FormNumber from '../form-number';
 import FormPlayerNumber from '../form-player-number';
-import useStore from '../../store';
 
 //---------------------------------------------------------------------
 
 const Bonus = () => {
-  const updateBonus = useStore(state => state.updateBonus);
+  const { control } = useFormContext();
 
   const [checked, setChecked] = useState(false);
-  const [question, setQuestion] = useState('');
-  const [points, setPoints] = useState('');
   const [questionType, setQuestionType] = useState('');
-  const [bonusResult, setBonusResult] = useState('');
-
-  const firstUpdate = useRef(true);
 
   const handleSwitchChange = () => {
     setChecked(!checked);
-  };
-
-  const handleQuestionChange = e => {
-    setQuestion(e.target.value);
-  };
-
-  const handlePointChange = e => {
-    setPoints(e.target.value);
   };
 
   const handleQuestionTypeChange = e => {
@@ -46,47 +33,21 @@ const Bonus = () => {
   const renderQuestionType = () => {
     switch (questionType) {
       case 'player':
-        return (
-          <FormPlayer
-            label="Enter Player"
-            overrideDefault={setBonusResult}
-            bonusInputValue
-          />
-        );
+        return <FormPlayer label="Enter Player" order="bonus.answer" />;
       case 'number':
-        return (
-          <FormNumber
-            label="Enter Number"
-            overrideDefault={setBonusResult}
-            bonusInputValue
-          />
-        );
+        return <FormNumber label="Enter Number" order="bonus.answer" />;
       case 'playerNumber':
         return (
           <FormPlayerNumber
             primaryLabel="Enter Player"
             secondaryLabel="Enter Number"
-            overrideDefault={setBonusResult}
-            bonusInputValue
+            order="bonus.answer"
           />
         );
       default:
         return null;
     }
   };
-
-  useEffect(() => {
-    if (!firstUpdate.current) {
-      updateBonus({
-        type: questionType,
-        points: parseInt(points, 10),
-        text: `${question}:`,
-        answer: bonusResult,
-      });
-    } else {
-      firstUpdate.current = false;
-    }
-  }, [question, points, questionType, bonusResult, updateBonus]);
 
   return (
     <FormGroup>
@@ -98,23 +59,38 @@ const Bonus = () => {
       {checked && (
         <>
           <Box sx={{ display: 'flex', mb: 1 }}>
-            <TextField
-              autoComplete="off"
-              sx={{ minWidth: 100 }}
-              id="outlined-basic"
-              label="Bonus Question"
-              variant="outlined"
-              value={question}
-              onChange={handleQuestionChange}
+            <Controller
+              name="bonus.text"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value } }) => (
+                <TextField
+                  autoComplete="off"
+                  sx={{ minWidth: 100 }}
+                  id="outlined-basic"
+                  label="Bonus Question"
+                  variant="outlined"
+                  onChange={onChange}
+                  value={value}
+                />
+              )}
             />
-            <TextField
-              autoComplete="off"
-              sx={{ mx: 1, minWidth: 50, maxWidth: 100 }}
-              id="outlined-basic"
-              label="Points"
-              variant="outlined"
-              value={points}
-              onChange={handlePointChange}
+
+            <Controller
+              name="bonus.points"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value } }) => (
+                <TextField
+                  autoComplete="off"
+                  sx={{ mx: 1, minWidth: 50, maxWidth: 100 }}
+                  id="outlined-basic"
+                  label="Points"
+                  variant="outlined"
+                  value={value}
+                  onChange={onChange}
+                />
+              )}
             />
             <FormControl sx={{ minWidth: 175, maxWidth: 200 }}>
               <InputLabel>Question type</InputLabel>

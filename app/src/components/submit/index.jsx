@@ -38,7 +38,7 @@ const Submit = () => {
         sx={{ mt: 1 }}
         variant="contained"
         loading={loading}
-        onClick={handleClick}
+        type="submit"
       >
         Submit
       </LoadingButton>

@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
+import { useFormContext } from 'react-hook-form';
 
 import AppBarComponent from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -22,7 +23,6 @@ import TextField from '@mui/material/TextField';
 import TableRowsIcon from '@mui/icons-material/TableRows';
 
 import { ResultContext, LoadingContext } from '../../contexts';
-import useStore from '../../store';
 import { newPostText, demoData } from './helpers';
 
 //---------------------------------------------------------------------
@@ -44,12 +44,11 @@ const style = {
 function AppBar() {
   const { result, setResult } = useContext(ResultContext);
   const { setLoading } = useContext(LoadingContext);
+  const { setValue } = useFormContext();
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [isModal, setModalOpen] = useState(false);
   const [url, setUrl] = useState('');
-
-  const importBoxscore = useStore(state => state.importBoxscore);
 
   const toggleDrawer = open => event => {
     if (
@@ -97,7 +96,23 @@ function AppBar() {
       const { data } = await axios('http://localhost:3000/api/boxscore', {
         params: { url },
       });
-      importBoxscore(data);
+
+      // Overwrite React Hook Form values
+      setValue('1', data[0].result);
+      setValue('2', data[1].result);
+      setValue('3', data[2].result);
+      setValue('4', data[3].result);
+      setValue('5', data[4].result);
+      setValue('6', data[5].result);
+      setValue('7.number', data[6].result.number);
+      setValue('7.player', data[6].result.player);
+      setValue('8.number', data[7].result.number);
+      setValue('8.player', data[7].result.player);
+      setValue('9.number', data[8].result.number);
+      setValue('9.player', data[8].result.player);
+      setValue('10.number', data[9].result.number);
+      setValue('10.player', data[9].result.player);
+
       setResult('');
     } catch (e) {
       console.log(e); // eslint-disable-line
