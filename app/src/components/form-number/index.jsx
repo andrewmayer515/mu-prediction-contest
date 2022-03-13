@@ -32,6 +32,7 @@ const FormNumber = ({ label, order }) => {
             variant="outlined"
             onChange={onChange}
             value={value}
+            type="number"
           />
         )}
       />
