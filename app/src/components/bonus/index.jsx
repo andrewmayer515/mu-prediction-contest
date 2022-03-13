@@ -83,6 +83,7 @@ const Bonus = () => {
                   variant="outlined"
                   value={value}
                   onChange={onChange}
+                  type="number"
                 />
               )}
             />
