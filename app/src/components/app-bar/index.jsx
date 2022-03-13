@@ -98,12 +98,12 @@ function AppBar() {
       });
 
       // Overwrite React Hook Form values
-      setValue('1', data[0].result);
-      setValue('2', data[1].result);
-      setValue('3', data[2].result);
-      setValue('4', data[3].result);
-      setValue('5', data[4].result);
-      setValue('6', data[5].result);
+      setValue('1.number', data[0].result);
+      setValue('2.number', data[1].result);
+      setValue('3.number', data[2].result);
+      setValue('4.number', data[3].result);
+      setValue('5.number', data[4].result);
+      setValue('6.number', data[5].result);
       setValue('7.number', data[6].result.number);
       setValue('7.player', data[6].result.player);
       setValue('8.number', data[7].result.number);

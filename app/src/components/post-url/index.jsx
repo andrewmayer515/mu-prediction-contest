@@ -21,6 +21,7 @@ const PostURL = () => {
         name="url"
         control={control}
         defaultValue=""
+        rules={{ required: true }}
         render={({ field: { onChange, value } }) => (
           <TextField
             id="outlined-basic"

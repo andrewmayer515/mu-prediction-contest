@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Controller, useFormContext } from 'react-hook-form';
 import FormControl from '@mui/material/FormControl';
@@ -17,14 +17,18 @@ const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const FormPlayer = ({ label, order }) => {
-  const { control } = useFormContext();
+  const { control, setValue } = useFormContext();
   const roster = useContext(RosterContext);
+
+  useEffect(() => {
+    setValue(`${order}.playerText`, label);
+  }, [label, order, setValue]);
 
   return (
     <>
       <FormControl sx={{ my: 1, mr: 1, width: 250 }}>
         <Controller
-          name={`${order}`}
+          name={`${order}.player`}
           control={control}
           defaultValue={[]}
           render={({ field: { onChange, value } }) => (

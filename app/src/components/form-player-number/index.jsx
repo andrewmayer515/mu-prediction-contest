@@ -10,8 +10,8 @@ import FormNumber from '../form-number';
 const FormPlayerNumber = ({ primaryLabel, secondaryLabel, order }) => {
   return (
     <Box sx={{ display: 'flex' }}>
-      <FormPlayer label={primaryLabel} order={`${order}.player`} />
-      <FormNumber label={secondaryLabel} order={`${order}.number`} />
+      <FormPlayer label={primaryLabel} order={`${order}`} />
+      <FormNumber label={secondaryLabel} order={`${order}`} />
     </Box>
   );
 };

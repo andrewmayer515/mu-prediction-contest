@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Controller, useFormContext } from 'react-hook-form';
 import Box from '@mui/material/Box';
@@ -7,7 +7,11 @@ import TextField from '@mui/material/TextField';
 //---------------------------------------------------------------------
 
 const FormNumber = ({ label, order }) => {
-  const { control } = useFormContext();
+  const { control, setValue } = useFormContext();
+
+  useEffect(() => {
+    setValue(`${order}.numberText`, label);
+  }, [label, order, setValue]);
 
   return (
     <Box
@@ -18,7 +22,7 @@ const FormNumber = ({ label, order }) => {
       autoComplete="off"
     >
       <Controller
-        name={`${order}`}
+        name={`${order}.number`}
         control={control}
         defaultValue=""
         render={({ field: { onChange, value } }) => (
