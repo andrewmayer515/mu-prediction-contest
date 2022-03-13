@@ -6,7 +6,12 @@ import TextField from '@mui/material/TextField';
 //---------------------------------------------------------------------
 
 const PostURL = () => {
-  const { control } = useFormContext();
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
+
+  const hasError = errors.url && errors.url.type === 'required';
 
   return (
     <Box
@@ -29,6 +34,8 @@ const PostURL = () => {
             variant="outlined"
             onChange={onChange}
             value={value}
+            error={hasError}
+            helperText={hasError ? 'Required' : ''}
           />
         )}
       />

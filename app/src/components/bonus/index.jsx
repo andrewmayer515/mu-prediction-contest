@@ -17,31 +17,26 @@ import FormPlayerNumber from '../form-player-number';
 //---------------------------------------------------------------------
 
 const Bonus = () => {
-  const { control } = useFormContext();
-
+  const { control, watch } = useFormContext();
   const [checked, setChecked] = useState(false);
-  const [questionType, setQuestionType] = useState('');
+  const watchType = watch('bonus.type');
 
   const handleSwitchChange = () => {
     setChecked(!checked);
   };
 
-  const handleQuestionTypeChange = e => {
-    setQuestionType(e.target.value);
-  };
-
   const renderQuestionType = () => {
-    switch (questionType) {
+    switch (watchType) {
       case 'player':
-        return <FormPlayer label="Enter Player" order="bonus.answer" />;
+        return <FormPlayer label="Enter Player" order="bonus" />;
       case 'number':
-        return <FormNumber label="Enter Number" order="bonus.answer" />;
+        return <FormNumber label="Enter Number" order="bonus" />;
       case 'playerNumber':
         return (
           <FormPlayerNumber
             primaryLabel="Enter Player"
             secondaryLabel="Enter Number"
-            order="bonus.answer"
+            order="bonus"
           />
         );
       default:
@@ -75,7 +70,6 @@ const Bonus = () => {
                 />
               )}
             />
-
             <Controller
               name="bonus.points"
               control={control}
@@ -92,18 +86,25 @@ const Bonus = () => {
                 />
               )}
             />
-            <FormControl sx={{ minWidth: 175, maxWidth: 200 }}>
-              <InputLabel>Question type</InputLabel>
-              <Select
-                value={questionType}
-                label="Question type"
-                onChange={handleQuestionTypeChange}
-              >
-                <MenuItem value="player">Player</MenuItem>
-                <MenuItem value="number">Number</MenuItem>
-                <MenuItem value="playerNumber">Player/Number</MenuItem>
-              </Select>
-            </FormControl>
+            <Controller
+              name="bonus.type"
+              control={control}
+              defaultValue=""
+              render={({ field: { onChange, value } }) => (
+                <FormControl sx={{ minWidth: 175, maxWidth: 200 }}>
+                  <InputLabel>Question type</InputLabel>
+                  <Select
+                    value={value}
+                    label="Question type"
+                    onChange={onChange}
+                  >
+                    <MenuItem value="player">Player</MenuItem>
+                    <MenuItem value="number">Number</MenuItem>
+                    <MenuItem value="playerNumber">Player/Number</MenuItem>
+                  </Select>
+                </FormControl>
+              )}
+            />
           </Box>
           {renderQuestionType()}
         </>
