@@ -1,5 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Controller, useFormContext } from 'react-hook-form';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -7,7 +8,7 @@ import Checkbox from '@mui/material/Checkbox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
-import { RosterContext, InputContext } from '../../contexts';
+import { RosterContext } from '../../contexts';
 import { getPlayerOptions } from './helpers';
 
 //---------------------------------------------------------------------
@@ -15,49 +16,47 @@ import { getPlayerOptions } from './helpers';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-const FormPlayer = ({ label, order, overrideDefault }) => {
+const FormPlayer = ({ label, order }) => {
+  const { control, setValue } = useFormContext();
   const roster = useContext(RosterContext);
-  const { input, setInput } = useContext(InputContext);
 
-  const handleChange = (e, values) => {
-    const player = values.map(value => value.value);
-    if (overrideDefault) {
-      overrideDefault(player);
-    } else {
-      setInput({
-        ...input,
-        [`question${order}`]: {
-          text: `${label}:`,
-          answer: player,
-          type: 'player',
-        },
-      });
-    }
-  };
+  useEffect(() => {
+    setValue(`${order}.playerText`, label);
+  }, [label, order, setValue]);
 
   return (
     <>
       <FormControl sx={{ my: 1, mr: 1, width: 250 }}>
-        <Autocomplete
-          autoHighlight
-          autoSelect
-          multiple
-          getOptionLabel={option => option.value}
-          isOptionEqualToValue={(option, value) => option.value === value.value}
-          onChange={handleChange}
-          renderOption={(props, option, { selected }) => (
-            <li {...props}>
-              <Checkbox
-                icon={icon}
-                checkedIcon={checkedIcon}
-                style={{ marginRight: 8 }}
-                checked={selected}
-              />
-              {option.value}
-            </li>
+        <Controller
+          name={`${order}.player`}
+          control={control}
+          defaultValue={[]}
+          render={({ field: { onChange, value } }) => (
+            <Autocomplete
+              autoHighlight
+              autoSelect
+              multiple
+              getOptionLabel={option => option.value}
+              isOptionEqualToValue={(option, _value) =>
+                option.value === _value.value
+              }
+              value={value}
+              onChange={(_, data) => onChange(data)}
+              renderOption={(props, option, { selected }) => (
+                <li {...props}>
+                  <Checkbox
+                    icon={icon}
+                    checkedIcon={checkedIcon}
+                    style={{ marginRight: 8 }}
+                    checked={selected}
+                  />
+                  {option.value}
+                </li>
+              )}
+              options={getPlayerOptions(roster)}
+              renderInput={params => <TextField {...params} label={label} />}
+            />
           )}
-          options={getPlayerOptions(roster)}
-          renderInput={params => <TextField {...params} label={label} />}
         />
       </FormControl>
     </>
@@ -66,8 +65,7 @@ const FormPlayer = ({ label, order, overrideDefault }) => {
 
 FormPlayer.propTypes = {
   label: PropTypes.string.isRequired,
-  order: PropTypes.number,
-  overrideDefault: PropTypes.func,
+  order: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default FormPlayer;

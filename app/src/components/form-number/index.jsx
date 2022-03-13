@@ -1,46 +1,39 @@
-import React, { useContext } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Controller, useFormContext } from 'react-hook-form';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
-import { InputContext } from '../../contexts';
-
 //---------------------------------------------------------------------
 
-const FormNumber = ({ label, order, overrideDefault }) => {
-  const { input, setInput } = useContext(InputContext);
+const FormNumber = ({ label, order }) => {
+  const { control, setValue } = useFormContext();
 
-  const handleChange = e => {
-    const number = parseInt(e.target.value, 10);
-
-    if (overrideDefault) {
-      overrideDefault(number);
-    } else {
-      setInput({
-        ...input,
-        [`question${order}`]: {
-          text: `${label}:`,
-          answer: number,
-          type: 'number',
-        },
-      });
-    }
-  };
+  useEffect(() => {
+    setValue(`${order}.numberText`, label);
+  }, [label, order, setValue]);
 
   return (
     <Box
-      component="form"
       sx={{
         '& > :not(style)': { my: 1, minWidth: 250 },
       }}
       noValidate
       autoComplete="off"
     >
-      <TextField
-        id="outlined-basic"
-        label={label}
-        variant="outlined"
-        onChange={handleChange}
+      <Controller
+        name={`${order}.number`}
+        control={control}
+        defaultValue=""
+        render={({ field: { onChange, value } }) => (
+          <TextField
+            id="outlined-basic"
+            label={label}
+            variant="outlined"
+            onChange={onChange}
+            value={value}
+          />
+        )}
       />
     </Box>
   );
@@ -48,8 +41,7 @@ const FormNumber = ({ label, order, overrideDefault }) => {
 
 FormNumber.propTypes = {
   label: PropTypes.string.isRequired,
-  order: PropTypes.number,
-  overrideDefault: PropTypes.func,
+  order: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 export default FormNumber;

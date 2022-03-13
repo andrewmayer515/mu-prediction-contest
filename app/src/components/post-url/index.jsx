@@ -1,20 +1,17 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-
-import { InputContext } from '../../contexts';
 
 //---------------------------------------------------------------------
 
 const PostURL = () => {
-  const { input, setInput } = useContext(InputContext);
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
 
-  const handleChange = e => {
-    setInput({
-      ...input,
-      url: e.target.value,
-    });
-  };
+  const hasError = errors.url && errors.url.type === 'required';
 
   return (
     <Box
@@ -25,11 +22,22 @@ const PostURL = () => {
       noValidate
       autoComplete="off"
     >
-      <TextField
-        id="outlined-basic"
-        label="MU Scoop Post URL"
-        variant="outlined"
-        onChange={handleChange}
+      <Controller
+        name="url"
+        control={control}
+        defaultValue=""
+        rules={{ required: true }}
+        render={({ field: { onChange, value } }) => (
+          <TextField
+            id="outlined-basic"
+            label="MU Scoop Post URL"
+            variant="outlined"
+            onChange={onChange}
+            value={value}
+            error={hasError}
+            helperText={hasError ? 'Required' : ''}
+          />
+        )}
       />
     </Box>
   );
