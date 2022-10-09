@@ -1,4 +1,5 @@
 node_modules
+dist
 config/auth.json
 config/key.js
 scripts/totals/totals.txt

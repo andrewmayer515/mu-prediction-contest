@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, ChangeEvent } from 'react';
 import axios from 'axios';
 import { useFormContext } from 'react-hook-form';
 
@@ -28,7 +28,6 @@ import { newPostText, demoData } from './helpers';
 //---------------------------------------------------------------------
 
 const style = {
-  position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
@@ -46,18 +45,11 @@ function AppBar() {
   const { setLoading } = useContext(LoadingContext);
   const { setValue } = useFormContext();
 
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [isModal, setModalOpen] = useState(false);
-  const [url, setUrl] = useState('');
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+  const [isModal, setModalOpen] = useState<boolean>(false);
+  const [url, setUrl] = useState<string>('');
 
-  const toggleDrawer = open => event => {
-    if (
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
-      return;
-    }
-
+  const toggleDrawer = (open: boolean) => {
     setIsDrawerOpen(open);
   };
 
@@ -121,17 +113,12 @@ function AppBar() {
     setLoading(false);
   };
 
-  const handleOnChange = e => {
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setUrl(e.target.value);
   };
 
   const list = () => (
-    <Box
-      sx={{ width: 250 }}
-      role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
-    >
+    <Box sx={{ width: 250 }}>
       <List>
         <ListItem button key="new" onClick={handleNewPost}>
           <ListItemIcon>
@@ -175,14 +162,14 @@ function AppBar() {
               edge="start"
               color="inherit"
               aria-label="menu"
-              onClick={toggleDrawer(true)}
+              onClick={() => toggleDrawer(true)}
             >
               <MenuIcon />
             </IconButton>
             <Drawer
               anchor="right"
               open={isDrawerOpen}
-              onClose={toggleDrawer(false)}
+              onClose={() => toggleDrawer(false)}
             >
               {list()}
             </Drawer>
@@ -195,7 +182,7 @@ function AppBar() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={style} position="absolute">
           <TextField
             id="outlined-basic"
             variant="outlined"

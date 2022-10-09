@@ -1,21 +1,45 @@
 {
-  "extends": ["airbnb-base", "plugin:react/recommended", "plugin:react-hooks/recommended", "plugin:prettier/recommended"],
-  "rules": {
-    "no-else-return": ["error", { "allowElseIf": true }]
+  "extends": [
+    "airbnb-base",
+    "airbnb-typescript",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json"
   },
-  "plugins": ["json", "prettier"],
+  "rules": {
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "no-else-return": ["error", { "allowElseIf": true }],
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"]
+  },
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "json", "prettier"],
   "env": {
     "browser": true
   },
   "overrides": [
     {
-      "files": ["*.test.js"],
+      "files": ["*"],
       "rules": {
         "no-undef": 0
       }
     },
     {
-      "files": ["*.js"],
+      "files": ["*"],
       "rules": {
         "import/prefer-default-export": 0,
         "react-hooks/exhaustive-deps": 0

@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Controller, useFormContext } from 'react-hook-form';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
@@ -16,7 +15,12 @@ import { getPlayerOptions } from './helpers';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-const FormPlayer = ({ label, order }) => {
+interface FormPlayerProps {
+  label: string;
+  order: string | number;
+}
+
+function FormPlayer({ label, order }: FormPlayerProps) {
   const { control, setValue } = useFormContext();
   const roster = useContext(RosterContext);
 
@@ -61,11 +65,6 @@ const FormPlayer = ({ label, order }) => {
       </FormControl>
     </>
   );
-};
-
-FormPlayer.propTypes = {
-  label: PropTypes.string.isRequired,
-  order: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-};
+}
 
 export default FormPlayer;

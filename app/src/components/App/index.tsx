@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import axios from 'axios';
 import { useForm, FormProvider } from 'react-hook-form';
 import Divider from '@mui/material/Divider';
@@ -12,16 +12,16 @@ import FormNumber from '../form-number';
 import FormPlayerNumber from '../form-player-number';
 import Bonus from '../bonus';
 import { RosterContext, ResultContext, LoadingContext } from '../../contexts';
-import { formatBody } from './helpers';
+import { formatBody, DataInterface } from './helpers';
 
 //---------------------------------------------------------------------
 
-const App = () => {
+function App() {
   const [roster, setRoster] = useState({});
-  const [result, setResult] = useState();
-  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState<string>();
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handleOnChange = e => {
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setResult(e.target.value);
   };
 
@@ -40,7 +40,7 @@ const App = () => {
     }
   }, [loading]);
 
-  const onSubmit = async formData => {
+  const onSubmit = async (formData: DataInterface) => {
     setLoading(true);
     try {
       const { data } = await axios.post(
@@ -122,7 +122,7 @@ const App = () => {
       </ResultContext.Provider>
     </RosterContext.Provider>
   );
-};
+}
 
 //---------------------------------------------------------------------
 

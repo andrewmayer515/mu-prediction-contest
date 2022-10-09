@@ -16,7 +16,7 @@ import FormPlayerNumber from '../form-player-number';
 
 //---------------------------------------------------------------------
 
-const Bonus = () => {
+function Bonus() {
   const { control, watch } = useFormContext();
   const [checked, setChecked] = useState(false);
   const watchType = watch('bonus.type');
@@ -112,6 +112,6 @@ const Bonus = () => {
       )}
     </FormGroup>
   );
-};
+}
 
 export default Bonus;

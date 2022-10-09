@@ -1,48 +1,46 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
 //---------------------------------------------------------------------
 
-const FormNumber = ({ label, order }) => {
-  const { control, setValue } = useFormContext();
+function PostURL() {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
 
-  useEffect(() => {
-    setValue(`${order}.numberText`, label);
-  }, [label, order, setValue]);
+  const hasError: boolean = errors.url && errors.url.type === 'required';
 
   return (
     <Box
+      component="form"
       sx={{
-        '& > :not(style)': { my: 1, minWidth: 250 },
+        '& > :not(style)': { m: 1, mt: 3, minWidth: 500 },
       }}
       noValidate
       autoComplete="off"
     >
       <Controller
-        name={`${order}.number`}
+        name="url"
         control={control}
         defaultValue=""
+        rules={{ required: true }}
         render={({ field: { onChange, value } }) => (
           <TextField
             id="outlined-basic"
-            label={label}
+            label="MU Scoop Post URL"
             variant="outlined"
             onChange={onChange}
             value={value}
-            type="number"
+            error={hasError}
+            helperText={hasError ? 'Required' : ''}
           />
         )}
       />
     </Box>
   );
-};
+}
 
-FormNumber.propTypes = {
-  label: PropTypes.string.isRequired,
-  order: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-};
-
-export default FormNumber;
+export default PostURL;

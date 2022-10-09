@@ -1,41 +1,40 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 
 //---------------------------------------------------------------------
 
-const PostURL = () => {
-  const {
-    control,
-    formState: { errors },
-  } = useFormContext();
+interface FormNumberProps {
+  label: string;
+  order: string | number;
+}
 
-  const hasError = errors.url && errors.url.type === 'required';
+const FormNumber = ({ label, order }: FormNumberProps) => {
+  const { control, setValue } = useFormContext();
+
+  useEffect(() => {
+    setValue(`${order}.numberText`, label);
+  }, [label, order, setValue]);
 
   return (
     <Box
-      component="form"
       sx={{
-        '& > :not(style)': { m: 1, mt: 3, minWidth: 500 },
+        '& > :not(style)': { my: 1, minWidth: 250 },
       }}
-      noValidate
-      autoComplete="off"
     >
       <Controller
-        name="url"
+        name={`${order}.number`}
         control={control}
         defaultValue=""
-        rules={{ required: true }}
         render={({ field: { onChange, value } }) => (
           <TextField
             id="outlined-basic"
-            label="MU Scoop Post URL"
+            label={label}
             variant="outlined"
             onChange={onChange}
             value={value}
-            error={hasError}
-            helperText={hasError ? 'Required' : ''}
+            type="number"
           />
         )}
       />
@@ -43,4 +42,4 @@ const PostURL = () => {
   );
 };
 
-export default PostURL;
+export default FormNumber;
