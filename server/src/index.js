@@ -1,4 +1,4 @@
-/* eslint-disable no-await-in-loop, no-loop-func, no-undef */
+/* eslint-disable no-undef */
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -11,7 +11,12 @@ import boxscoreRouter from './routes/boxscore';
 //---------------------------------------------------------------------
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
+
+// Serve static files from the React app
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../../app/dist')));
+}
 
 app.use(bodyParser.json());
 app.use(bodyParser.text({ type: '*/*' }));

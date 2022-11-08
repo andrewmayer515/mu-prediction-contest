@@ -23,7 +23,7 @@ interface BonusInterface {
 }
 
 export interface DataInterface {
-  [name: string]: PlayerInterface | NumberInterface | BonusInterface;
+  [index: string]: PlayerInterface | NumberInterface | BonusInterface;
 }
 
 export function formatNumber({ number, numberText }: NumberInterface) {
