@@ -1,5 +1,5 @@
 // ROSTER 2021-2022
-export const ROSTER = {
+var ROSTER = {
   KAM_JONES: 'Kam Jones',
   EMARION_ELLIS: 'Emarion Ellis',
   STEVIE_MITCHELL: 'Stevie Mitchell',
@@ -17,6 +17,8 @@ export const ROSTER = {
   MICHAEL_KENNEDY: 'Michael Kennedy',
 };
 
-export const ALIAS = {
+var ALIAS = {
   [ROSTER.OLIVIER_MAXENCE_PROSPER]: ['OMP', 'OMAX'],
 };
+
+module.exports = { ROSTER, ALIAS };
