@@ -49,20 +49,19 @@ function AppBar() {
   const [isModal, setModalOpen] = useState<boolean>(false);
   const [url, setUrl] = useState<string>('');
 
-  const toggleDrawer = (open: boolean) => {
-    setIsDrawerOpen(open);
-  };
-
   const handleNewPost = () => {
+    setIsDrawerOpen(false);
     setResult(newPostText);
   };
 
   const handleAddTotals = async () => {
+    setIsDrawerOpen(false);
     const { data } = await axios.post('/api/totals', result);
     setResult(data);
   };
 
   const handleDemo = async () => {
+    setIsDrawerOpen(false);
     setLoading(true);
     try {
       const { data } = await axios.post('/api/results', demoData);
@@ -156,14 +155,14 @@ function AppBar() {
               edge="start"
               color="inherit"
               aria-label="menu"
-              onClick={() => toggleDrawer(true)}
+              onClick={() => setIsDrawerOpen(true)}
             >
               <MenuIcon />
             </IconButton>
             <Drawer
               anchor="right"
               open={isDrawerOpen}
-              onClose={() => toggleDrawer(false)}
+              onClose={() => setIsDrawerOpen(false)}
             >
               {list()}
             </Drawer>
