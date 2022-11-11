@@ -11,7 +11,8 @@ function PostURL() {
     formState: { errors },
   } = useFormContext();
 
-  const hasError: boolean = errors.url && errors.url.type === 'required';
+  const hasError: boolean =
+    (errors.url && errors.url.type === 'required') ?? false;
 
   return (
     <Box
