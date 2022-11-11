@@ -58,20 +58,14 @@ function AppBar() {
   };
 
   const handleAddTotals = async () => {
-    const { data } = await axios.post(
-      'http://localhost:3000/api/totals',
-      result
-    );
+    const { data } = await axios.post('/api/totals', result);
     setResult(data);
   };
 
   const handleDemo = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.post(
-        'http://localhost:3000/api/results',
-        demoData
-      );
+      const { data } = await axios.post('/api/results', demoData);
       setResult(data);
     } catch (e) {
       console.log(e); // eslint-disable-line
@@ -85,7 +79,7 @@ function AppBar() {
     setLoading(true);
 
     try {
-      const { data } = await axios('http://localhost:3000/api/boxscore', {
+      const { data } = await axios('/api/boxscore', {
         params: { url },
       });
 

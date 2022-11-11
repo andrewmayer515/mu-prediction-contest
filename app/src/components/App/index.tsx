@@ -27,7 +27,7 @@ function App() {
 
   useEffect(() => {
     async function fetchRoster() {
-      const { data } = await axios('http://localhost:3000/api/roster');
+      const { data } = await axios('/api/roster');
       setRoster(data);
     }
 
@@ -43,10 +43,7 @@ function App() {
   const onSubmit = async (formData: DataInterface) => {
     setLoading(true);
     try {
-      const { data } = await axios.post(
-        'http://localhost:3000/api/results',
-        formatBody(formData)
-      );
+      const { data } = await axios.post('/api/results', formatBody(formData));
       setResult(data);
     } catch (e) {
       console.log(e); // eslint-disable-line
