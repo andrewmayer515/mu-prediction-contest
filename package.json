@@ -6,7 +6,7 @@
     "server"
   ],
   "scripts": {
-    "build": "npm ci --production=false && npm run build:client && npm run build:server",
+    "build": "npm install --production=false && npm run build:client && npm run build:server",
     "build:client": "cd app && npm run build",
     "build:server": "cd server && npm run build",
     "dev": "concurrently --kill-others \"npm start --workspace=server\" \"npm start --workspace=app\"",
