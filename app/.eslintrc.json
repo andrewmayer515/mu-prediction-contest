@@ -35,20 +35,10 @@
     {
       "files": ["*"],
       "rules": {
-        "no-undef": 0
-      }
-    },
-    {
-      "files": ["*"],
-      "rules": {
+        "no-undef": 0,
+        "linebreak-style": 0,
         "import/prefer-default-export": 0,
         "react-hooks/exhaustive-deps": 0
-      }
-    },
-    {
-      "files": ["*"],
-      "rules": {
-        "linebreak-style": 0
       }
     }
   ],

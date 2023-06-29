@@ -1,5 +1,7 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+import { useQuery } from 'react-query';
+import ky from 'ky';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -7,8 +9,8 @@ import Checkbox from '@mui/material/Checkbox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 
-import { RosterContext } from '../../contexts';
 import { getPlayerOptions } from './helpers';
+import { RosterContextInterface } from './types';
 
 //---------------------------------------------------------------------
 
@@ -22,7 +24,11 @@ interface FormPlayerProps {
 
 function FormPlayer({ label, order }: FormPlayerProps) {
   const { control, setValue } = useFormContext();
-  const roster = useContext(RosterContext);
+  const { data } = useQuery(
+    'roster',
+    (): Promise<RosterContextInterface> => ky.get('/api/roster').json()
+  );
+  const roster = data ?? {};
 
   useEffect(() => {
     setValue(`${order}.playerText`, label);
@@ -45,7 +51,7 @@ function FormPlayer({ label, order }: FormPlayerProps) {
                 option.value === _value.value
               }
               value={value}
-              onChange={(_, data) => onChange(data)}
+              onChange={(_, input) => onChange(input)}
               renderOption={(props, option, { selected }) => (
                 <li {...props}>
                   <Checkbox

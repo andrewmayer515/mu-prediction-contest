@@ -7,10 +7,6 @@ interface ResultContextInterface {
   setResult: (text: string) => void;
 }
 
-export interface RosterContextInterface {
-  [name: string]: string;
-}
-
 interface LoadingContextInterface {
   loading: boolean;
   setLoading: (loading: boolean) => void;
@@ -19,9 +15,7 @@ interface LoadingContextInterface {
 export const ResultContext = createContext<
   ResultContextInterface | Record<string, never>
 >({});
-export const RosterContext = createContext<
-  RosterContextInterface | Record<string, never>
->({});
+
 export const LoadingContext = createContext<
   LoadingContextInterface | Record<string, never>
 >({});

@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import App from './components/App';
@@ -14,12 +15,16 @@ const theme = createTheme({
   },
 });
 
+const queryClient = new QueryClient();
+
 function Root() {
   return (
     <React.StrictMode>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
+      </QueryClientProvider>
     </React.StrictMode>
   );
 }
