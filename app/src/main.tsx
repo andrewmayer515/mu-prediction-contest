@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import App from './components/App';
+import App from './app';
 
 //---------------------------------------------------------------------
 

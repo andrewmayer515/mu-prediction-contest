@@ -7,13 +7,13 @@ import Grid from '@mui/material/Grid';
 import { TextField } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 
-import AppBar from '../app-bar';
-import PostURL from '../post-url';
-import FormNumber from '../form-number';
-import FormPlayerNumber from '../form-player-number';
-import Bonus from '../bonus';
+import AppBar from './app-bar';
+import PostURL from './post-url';
+import FormNumber from '../components/form-number';
+import FormPlayerNumber from '../components/form-player-number';
+import Bonus from './bonus';
 import { formatBody, DataInterface } from './helpers';
-import { useAppStore } from '../../store';
+import { useAppStore } from '../store';
 
 //---------------------------------------------------------------------
 
@@ -23,7 +23,7 @@ type ResultsResponse = {
 
 function App() {
   const { loading, results, setLoading, setResults } = useAppStore(
-    state => ({
+    (state) => ({
       loading: state.loading,
       results: state.results,
       setLoading: state.setLoading,
@@ -35,12 +35,6 @@ function App() {
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setResults(e.target.value);
   };
-
-  useEffect(() => {
-    if (loading) {
-      setResults('Loading...');
-    }
-  }, [loading]);
 
   const onSubmit = async (formData: DataInterface) => {
     setLoading(true);
@@ -111,7 +105,7 @@ function App() {
             fullWidth
             rows={30}
             placeholder="Results appear here"
-            value={results}
+            value={loading ? 'Loading...' : results}
             onChange={handleOnChange}
             disabled={loading}
           />

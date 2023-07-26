@@ -10,9 +10,9 @@ import InputLabel from '@mui/material/InputLabel';
 import { FormControl } from '@mui/material';
 import Box from '@mui/material/Box';
 
-import FormPlayer from '../form-player';
-import FormNumber from '../form-number';
-import FormPlayerNumber from '../form-player-number';
+import FormPlayer from '../../components/form-player';
+import FormNumber from '../../components/form-number';
+import FormPlayerNumber from '../../components/form-player-number';
 
 //---------------------------------------------------------------------
 
