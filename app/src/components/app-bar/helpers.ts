@@ -94,3 +94,30 @@ export const demoData = {
   },
   url: 'https://www.muscoop.com/index.php?topic=37247.0',
 };
+
+type NumberResult = {
+  result: string;
+};
+
+type PlayerNumberResult = {
+  result: {
+    number: string;
+    player: string;
+  };
+};
+
+export type BoxscoreRecord = NumberResult | PlayerNumberResult;
+
+type ResultType = 'player' | 'number';
+
+function isPlayerNumber(value: BoxscoreRecord): value is PlayerNumberResult {
+  return typeof value === 'object' && 'number' in value && 'player' in value;
+}
+
+export function getResult(boxscoreRecord: BoxscoreRecord, type?: ResultType) {
+  if (isPlayerNumber(boxscoreRecord) && type) {
+    return boxscoreRecord.result[type];
+  }
+
+  return boxscoreRecord.result;
+}

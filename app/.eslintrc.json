@@ -6,7 +6,8 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "prettier"
   ],
   "parserOptions": {
     "project": "./tsconfig.json"
@@ -27,7 +28,7 @@
     "@typescript-eslint/no-use-before-define": ["error"]
   },
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "json", "prettier"],
+  "plugins": ["@typescript-eslint", "json"],
   "env": {
     "browser": true
   },

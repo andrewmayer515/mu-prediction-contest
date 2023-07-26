@@ -3,6 +3,20 @@ import { devtools } from 'zustand/middleware';
 
 //---------------------------------------------------------------------
 
-const useStore = create(devtools(() => ({})));
+type AppState = {
+  loading: boolean;
+  results: string;
+  setLoading: (loadingState: boolean) => void;
+  setResults: (results: string) => void;
+};
 
-export default useStore;
+export const useFormStore = create(devtools(() => ({})));
+
+export const useAppStore = create<AppState>(
+  devtools(set => ({
+    loading: false,
+    results: '',
+    setLoading: loadingState => set({ loading: loadingState }),
+    setResults: results => set({ results }),
+  }))
+);

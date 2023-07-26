@@ -6,17 +6,13 @@ import FormNumber from '../form-number';
 
 //---------------------------------------------------------------------
 
-interface FormPlayerNumberProps {
+type Props = {
   primaryLabel: string;
   secondaryLabel: string;
   order: string | number;
-}
+};
 
-function FormPlayerNumber({
-  primaryLabel,
-  secondaryLabel,
-  order,
-}: FormPlayerNumberProps) {
+function FormPlayerNumber({ primaryLabel, secondaryLabel, order }: Props) {
   return (
     <Box sx={{ display: 'flex' }}>
       <FormPlayer label={primaryLabel} order={`${order}`} />

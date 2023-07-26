@@ -1,6 +1,7 @@
-import React, { useState, useContext, ChangeEvent } from 'react';
-import axios from 'axios';
+import React, { useState, ChangeEvent } from 'react';
+import ky from 'ky';
 import { useFormContext } from 'react-hook-form';
+import shallow from 'zustand/shallow';
 
 import AppBarComponent from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -22,8 +23,10 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import TableRowsIcon from '@mui/icons-material/TableRows';
 
-import { ResultContext, LoadingContext } from '../../contexts';
-import { newPostText, demoData } from './helpers';
+import { newPostText, demoData, getResult } from './helpers';
+import { useAppStore } from '../../store';
+
+import type { BoxscoreRecord } from './helpers';
 
 //---------------------------------------------------------------------
 
@@ -40,9 +43,27 @@ const style = {
 
 //---------------------------------------------------------------------
 
+type TotalsResponse = {
+  data: string;
+};
+
+type ResultsResponse = {
+  data: string;
+};
+
+type BoxscoreResponse = {
+  data: Array<BoxscoreRecord>;
+};
+
 function AppBar() {
-  const { result, setResult } = useContext(ResultContext);
-  const { setLoading } = useContext(LoadingContext);
+  const { results, setResults, setLoading } = useAppStore(
+    (state) => ({
+      results: state.results,
+      setResults: state.setResults,
+      setLoading: state.setLoading,
+    }),
+    shallow
+  );
   const { setValue } = useFormContext();
 
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
@@ -51,21 +72,23 @@ function AppBar() {
 
   const handleNewPost = () => {
     setIsDrawerOpen(false);
-    setResult(newPostText);
+    setResults(newPostText);
   };
 
   const handleAddTotals = async () => {
     setIsDrawerOpen(false);
-    const { data } = await axios.post('/api/totals', result);
-    setResult(data);
+    const { data }: TotalsResponse = await ky
+      .post('/api/totals', { json: results })
+      .json();
+    setResults(data);
   };
 
   const handleDemo = async () => {
     setIsDrawerOpen(false);
     setLoading(true);
     try {
-      const { data } = await axios.post('/api/results', demoData);
-      setResult(data);
+      const data = await ky.post('/api/results', { json: demoData }).text();
+      setResults(data);
     } catch (e) {
       console.log(e); // eslint-disable-line
     }
@@ -78,27 +101,29 @@ function AppBar() {
     setLoading(true);
 
     try {
-      const { data } = await axios('/api/boxscore', {
-        params: { url },
-      });
+      const { data }: BoxscoreResponse = await ky
+        .get('/api/boxscore', {
+          searchParams: { url },
+        })
+        .json();
 
       // Overwrite React Hook Form values
-      setValue('1.number', data[0].result);
-      setValue('2.number', data[1].result);
-      setValue('3.number', data[2].result);
-      setValue('4.number', data[3].result);
-      setValue('5.number', data[4].result);
-      setValue('6.number', data[5].result);
-      setValue('7.number', data[6].result.number);
-      setValue('7.player', data[6].result.player);
-      setValue('8.number', data[7].result.number);
-      setValue('8.player', data[7].result.player);
-      setValue('9.number', data[8].result.number);
-      setValue('9.player', data[8].result.player);
-      setValue('10.number', data[9].result.number);
-      setValue('10.player', data[9].result.player);
+      setValue('1.number', getResult(data[0]));
+      setValue('2.number', getResult(data[1]));
+      setValue('3.number', getResult(data[2]));
+      setValue('4.number', getResult(data[3]));
+      setValue('5.number', getResult(data[4]));
+      setValue('6.number', getResult(data[5]));
+      setValue('7.number', getResult(data[6], 'number'));
+      setValue('7.player', getResult(data[6], 'player'));
+      setValue('8.number', getResult(data[7], 'number'));
+      setValue('8.player', getResult(data[7], 'player'));
+      setValue('9.number', getResult(data[8], 'number'));
+      setValue('9.player', getResult(data[8], 'player'));
+      setValue('10.number', getResult(data[9], 'number'));
+      setValue('10.player', getResult(data[9], 'player'));
 
-      setResult('');
+      setResults('');
     } catch (e) {
       console.log(e); // eslint-disable-line
     }

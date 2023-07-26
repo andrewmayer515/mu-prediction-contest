@@ -5,12 +5,12 @@ import TextField from '@mui/material/TextField';
 
 //---------------------------------------------------------------------
 
-interface FormNumberProps {
+type Props = {
   label: string;
   order: string | number;
-}
+};
 
-const FormNumber = ({ label, order }: FormNumberProps) => {
+const FormNumber = ({ label, order }: Props) => {
   const { control, setValue } = useFormContext();
 
   useEffect(() => {

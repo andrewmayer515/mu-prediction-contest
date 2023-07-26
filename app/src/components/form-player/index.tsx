@@ -17,12 +17,12 @@ import { RosterContextInterface } from './types';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-interface FormPlayerProps {
+type Props = {
   label: string;
   order: string | number;
-}
+};
 
-function FormPlayer({ label, order }: FormPlayerProps) {
+function FormPlayer({ label, order }: Props) {
   const { control, setValue } = useFormContext();
   const { data } = useQuery(
     'roster',
